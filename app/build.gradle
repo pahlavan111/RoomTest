@@ -25,6 +25,8 @@ android {
 
 dependencies {
     def room_version = "2.2.5"
+    ext.rxVersion = '2.2.1'
+    ext.rxAndroidVersion = '2.1.0'
 
     implementation fileTree(dir: 'libs', include: ['*.jar'])
     implementation 'androidx.appcompat:appcompat:1.1.0'
@@ -34,7 +36,7 @@ dependencies {
     androidTestImplementation 'androidx.test.espresso:espresso-core:3.2.0'
 
 
-          //////////////// room \\\\\\\\\\\\\\\\\\\\
+    //////////////// room \\\\\\\\\\\\\\\\\\\\
 
     implementation "androidx.room:room-runtime:$room_version"
     annotationProcessor "androidx.room:room-compiler:$room_version"
@@ -48,7 +50,9 @@ dependencies {
     // Test helpers
     testImplementation "androidx.room:room-testing:$room_version"
 
-
+    //rxJava
+    implementation "io.reactivex.rxjava2:rxandroid:${rxAndroidVersion}"
+    implementation "io.reactivex.rxjava2:rxjava:$rxVersion"
 
 
 }
