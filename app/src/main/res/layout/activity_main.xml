@@ -49,7 +49,8 @@
         android:layout_marginTop="56dp"
         android:layout_marginEnd="39dp"
         android:layout_marginRight="39dp"
-        android:text="Button"
+        android:background="@android:color/holo_green_light"
+        android:text="Save"
         app:layout_constraintEnd_toStartOf="@+id/btn_show"
         app:layout_constraintTop_toBottomOf="@+id/edt_age" />
 
@@ -57,7 +58,8 @@
         android:id="@+id/btn_show"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="Button"
+        android:background="@android:color/holo_blue_light"
+        android:text="Show"
         app:layout_constraintBaseline_toBaselineOf="@+id/btn_save"
         app:layout_constraintEnd_toEndOf="@+id/edt_age" />
 
