@@ -10,6 +10,12 @@ import android.widget.Button;
 import android.widget.EditText;
 import android.widget.Toast;
 
+import io.reactivex.Observable;
+import io.reactivex.SingleObserver;
+import io.reactivex.android.schedulers.AndroidSchedulers;
+import io.reactivex.disposables.Disposable;
+import io.reactivex.schedulers.Schedulers;
+
 public class MainActivity extends AppCompatActivity {
 
     Button btnSave, btnShow;
@@ -21,6 +27,7 @@ public class MainActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
 
+
         btnSave = findViewById(R.id.btn_save);
         btnShow = findViewById(R.id.btn_show);
         edtAge = findViewById(R.id.edt_age);
@@ -30,14 +37,34 @@ public class MainActivity extends AppCompatActivity {
             @Override
             public void onClick(View v) {
 
-              String  name = edtName.getText().toString();
-               String family = edtFamily.getText().toString();
+                String name = edtName.getText().toString();
+                String family = edtFamily.getText().toString();
                 String age = edtAge.getText().toString();
 
-                if (inputAreCorrect(name,family,age)){
+                if (inputAreCorrect(name, family, age)) {
                     hideKeyboard(MainActivity.this);
 
-                    Toast.makeText(getApplicationContext(), "input are correct", Toast.LENGTH_SHORT).show();
+                    PersonRepository repository = new PersonRepository(getApplicationContext());
+                    repository.getPersonDatabase().personDAO().insertPerson(new Person(name, family, Integer.parseInt(age)))
+                            .subscribeOn(Schedulers.newThread())
+                            .observeOn(AndroidSchedulers.mainThread())
+                            .subscribe(new SingleObserver<Long>() {
+                                @Override
+                                public void onSubscribe(Disposable d) {
+
+                                }
+
+                                @Override
+                                public void onSuccess(Long aLong) {
+
+                                    Toast.makeText(MainActivity.this, aLong + "", Toast.LENGTH_SHORT).show();
+                                }
+
+                                @Override
+                                public void onError(Throwable e) {
+
+                                }
+                            });
 
                     clearInputs();
                 }
@@ -45,11 +72,9 @@ public class MainActivity extends AppCompatActivity {
         });
 
 
-
     }
 
-    Boolean inputAreCorrect(String name,String family,String age) {
-
+    Boolean inputAreCorrect(String name, String family, String age) {
 
 
         if (name.isEmpty()) {
@@ -63,12 +88,12 @@ public class MainActivity extends AppCompatActivity {
             edtFamily.requestFocus();
             return false;
         }
-        if (age .isEmpty()) {
+        if (age.isEmpty()) {
             edtAge.setError("please enter a right value of age !!!");
             edtAge.requestFocus();
             return false;
         }
-    
+
 
         return true;
     }
