@@ -1,7 +1,10 @@
 package com.bp.roomtest;
 
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.recyclerview.widget.LinearLayoutManager;
+import androidx.recyclerview.widget.RecyclerView;
 
+import android.content.Context;
 import android.os.Bundle;
 import android.widget.Toast;
 
@@ -15,10 +18,13 @@ import io.reactivex.schedulers.Schedulers;
 
 public class ActivityShow extends AppCompatActivity {
 
+    RecyclerView rv_person;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_show);
+        rv_person = findViewById(R.id.rv_person);
+
 
         PersonRepository repository = new PersonRepository(getApplicationContext());
         repository.getPersonDatabase().personDAO().getPersonList()
@@ -34,6 +40,7 @@ public class ActivityShow extends AppCompatActivity {
                     public void onSuccess(List<Person> people) {
 
                         Toast.makeText(getApplicationContext(), people.size() + "", Toast.LENGTH_SHORT).show();
+                        showDataList(people,getApplicationContext());
                     }
 
                     @Override
@@ -45,7 +52,10 @@ public class ActivityShow extends AppCompatActivity {
 
     }
 
-    void showDataList(){
+    void showDataList(List<Person> personList, Context context){
+
+        rv_person.setLayoutManager(new LinearLayoutManager(context,LinearLayoutManager.VERTICAL,false));
+        rv_person.setAdapter(new PersonAdapter(context,personList));
 
     }
 
