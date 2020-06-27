@@ -3,6 +3,7 @@ package com.bp.roomtest;
 import androidx.appcompat.app.AppCompatActivity;
 
 import android.app.Activity;
+import android.content.Intent;
 import android.os.Bundle;
 import android.view.View;
 import android.view.inputmethod.InputMethodManager;
@@ -69,6 +70,12 @@ public class MainActivity extends AppCompatActivity {
             }
         });
 
+        btnShow.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                startActivity(new Intent(MainActivity.this,ActivityShow.class));
+            }
+        });
 
     }
 
