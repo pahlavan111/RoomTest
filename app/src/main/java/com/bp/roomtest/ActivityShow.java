@@ -4,6 +4,7 @@ import androidx.appcompat.app.AppCompatActivity;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
+import android.app.Activity;
 import android.content.Context;
 import android.os.Bundle;
 import android.widget.Toast;
@@ -55,7 +56,7 @@ public class ActivityShow extends AppCompatActivity {
     void showDataList(List<Person> personList, Context context){
 
         rv_person.setLayoutManager(new LinearLayoutManager(context,LinearLayoutManager.VERTICAL,false));
-        rv_person.setAdapter(new PersonAdapter(context,personList));
+        rv_person.setAdapter(new PersonAdapter(ActivityShow.this,personList));
 
     }
 
